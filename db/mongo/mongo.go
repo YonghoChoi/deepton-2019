@@ -5,7 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
-	"yonghochoi.com/depthon-2019/cmd/peng-api/conf"
+	"yonghochoi.com/depthon-2019/cmd/pengha-api/conf"
 )
 
 const DBName = "pengha"

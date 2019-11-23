@@ -4,7 +4,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
 	"net/http"
-	"yonghochoi.com/depthon-2019/cmd/peng-api/service"
+	"yonghochoi.com/depthon-2019/cmd/pengha-api/service"
 	"yonghochoi.com/depthon-2019/model/emoticon"
 	"yonghochoi.com/depthon-2019/model/user"
 )

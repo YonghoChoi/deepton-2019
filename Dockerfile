@@ -2,7 +2,9 @@ FROM debian:jessie
 
 RUN apt-get update && apt-get install -y vim
 
-COPY bin/pengha-api /opt/
+ADD bin /opt
 RUN chmod +x /opt/pengha-api
+RUN ls -l /opt
+WORKDIR /opt
 
-CMD ["/opt/pengha-api"]
+CMD ["./pengha-api", "-config", "./config.yml"]
