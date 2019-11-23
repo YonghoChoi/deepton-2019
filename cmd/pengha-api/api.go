@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/google/uuid"
 	"github.com/labstack/echo"
 	"net/http"
 	"yonghochoi.com/depthon-2019/cmd/pengha-api/service"
@@ -11,25 +10,48 @@ import (
 	"yonghochoi.com/depthon-2019/model/user"
 )
 
-var emoticonDatas []emoticon.Emoticon
-var userDatas []user.User
-
 func InitSample() {
-	emoticonDatas = []emoticon.Emoticon{
-		emoticon.New("good", "기분 좋음", "http://localhost"),
-		emoticon.New("angry", "화남", "http://localhost"),
-		emoticon.New("boring", "따분함", "http://localhost"),
-		emoticon.New("sad", "슬픔", "http://localhost"),
-		emoticon.New("tired", "지침", "http://localhost"),
+	emoticons, _ := service.GetEmoticons()
+	if len(emoticons) > 0 {
+		return
 	}
 
-	for _, name := range []string{"펭수1", "펭수2", "펭수3", "펭수4"} {
-		userDatas = append(userDatas, user.New(name, uuid.New().String()))
+	emoticons := []emoticon.Emoticon{
+		emoticon.New("icon_01", "하트", "http://pengha.yonghochoi.com/icons/icon_01.png"),
+		emoticon.New("icon_02", "흠", "http://pengha.yonghochoi.com/icons/icon_02.png"),
+		emoticon.New("icon_03", "눈물", "http://pengha.yonghochoi.com/icons/icon_03.png"),
+		emoticon.New("icon_04", "땀", "http://pengha.yonghochoi.com/icons/icon_04.png"),
+		emoticon.New("icon_05", "부끄", "http://pengha.yonghochoi.com/icons/icon_05.png"),
+		emoticon.New("icon_06", "띠용", "http://pengha.yonghochoi.com/icons/icon_06.png"),
+		emoticon.New("icon_07", "멋짐", "http://pengha.yonghochoi.com/icons/icon_07.png"),
+		emoticon.New("icon_08", "야호", "http://pengha.yonghochoi.com/icons/icon_08.png"),
+	}
+
+	for _, e := range emoticons {
+		if err := emoticon.Insert(e); err != nil {
+			fmt.Println(err.Error())
+		}
 	}
 }
 
 func GetEmoticonDatas(c echo.Context) error {
-	return c.JSON(http.StatusOK, emoticonDatas)
+	resp := packet.Resp{Code: "200"}
+	defer func() {
+		if err := c.JSON(http.StatusOK, resp); err != nil {
+			fmt.Println(err.Error())
+		}
+	}()
+
+	emoticons, err := service.GetEmoticons()
+	if err != nil {
+		resp.Code = "500"
+		resp.Message = err.Error()
+		fmt.Println(err.Error())
+		return nil
+	}
+
+	resp.Data = emoticons
+	return nil
 }
 
 func GetMoods(c echo.Context) error {
@@ -37,7 +59,22 @@ func GetMoods(c echo.Context) error {
 }
 
 func GetUsers(c echo.Context) error {
-	return c.JSON(http.StatusOK, userDatas)
+	resp := packet.Resp{Code: "200"}
+	defer func() {
+		if err := c.JSON(http.StatusOK, resp); err != nil {
+			fmt.Println(err.Error())
+		}
+	}()
+
+	users, err := service.GetUsers()
+	if err != nil {
+		resp.Code = "500"
+		resp.Message = err.Error()
+		fmt.Println(err.Error())
+
+	}
+	resp.Data = users
+	return nil
 }
 
 func Join(c echo.Context) error {
