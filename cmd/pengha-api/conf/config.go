@@ -21,6 +21,10 @@ func SetConfigFilePath(path string) {
 
 func GetConfig() Config {
 	once.Do(func() {
+		if gFilePath == "" {
+			gFilePath = "/Users/yongho/Works/Projects/depthon-2019/cmd/pengha-api/conf/config.yml"
+		}
+
 		fmt.Println("filename : " + gFilePath)
 		yamlFile, err := ioutil.ReadFile(gFilePath)
 		err = yaml.Unmarshal(yamlFile, &gConfig)
