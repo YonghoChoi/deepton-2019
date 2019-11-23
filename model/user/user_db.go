@@ -28,3 +28,15 @@ func Update(u User) error {
 		)
 	return err
 }
+
+func FindOne(id string) (User, error) {
+	result := mongo.GetCollection(CollectionName).
+		FindOne(context.TODO(), bson.M{"_id": id})
+
+	var u User
+	if err := result.Decode(&u); err != nil {
+		return u, err
+	}
+
+	return u, nil
+}

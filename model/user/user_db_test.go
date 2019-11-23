@@ -33,3 +33,13 @@ func TestDelete(t *testing.T) {
 		t.Fatal(err.Error())
 	}
 }
+
+func TestFindOne(t *testing.T) {
+	id := "d81180ec-cf4a-4542-b807-e1d4532f2f67"
+	u, err := FindOne(id)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	t.Log(u)
+}

@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
 	"net/http"
+	"yonghochoi.com/depthon-2019/cmd/peng-api/service"
 	"yonghochoi.com/depthon-2019/model/emoticon"
 	"yonghochoi.com/depthon-2019/model/user"
 )
@@ -38,11 +39,15 @@ func GetUsers(c echo.Context) error {
 }
 
 func Join(c echo.Context) error {
-	var user user.User
-	if err := c.Bind(&user); err != nil {
+	var u user.User
+	if err := c.Bind(&u); err != nil {
 		return err
 	}
 
-	user.Join()
-	return c.JSON(http.StatusOK, user)
+	u, err := service.Join(u)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, u)
 }
