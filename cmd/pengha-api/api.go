@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/labstack/echo"
+	"math/rand"
 	"net/http"
+	"time"
 	"yonghochoi.com/depthon-2019/cmd/pengha-api/service"
 	"yonghochoi.com/depthon-2019/model/emoticon"
 	"yonghochoi.com/depthon-2019/model/mood"
@@ -11,7 +13,7 @@ import (
 	"yonghochoi.com/depthon-2019/model/user"
 )
 
-func InitSample() {
+func InitEmoticons() {
 	emoticons, _ := service.GetEmoticons()
 	if len(emoticons) > 0 {
 		return
@@ -30,6 +32,37 @@ func InitSample() {
 
 	for _, e := range emoticons {
 		if err := emoticon.Insert(e); err != nil {
+			fmt.Println(err.Error())
+		}
+	}
+}
+
+func InitMoods() {
+	moods, _ := service.GetMoods()
+	if len(moods) > 0 {
+		return
+	}
+	moodTypes := []string{
+		"good", "flex", "sad", "angry", "lonely", "happy", "embarrassed", "best",
+	}
+	titles := []string{
+		"좋아!", "Flex!", "슬퍼", "화나!", "외로워..", "행복해", "당황스러워", "기분 최고!",
+	}
+	descs := []string{
+		"디프만 좋아!", "플렉스!", "시간이 짧아서 너무 슬퍼", "다 못해서 화나!", "혼자라 외로워..", "겁나 행복해", "졸 당황스러워", "끝나서 기분 최고!",
+	}
+
+	moodTypeCount := len(moodTypes)
+	size := 90
+	ago := time.Now().AddDate(0, -3, 0)
+	for i := 0; i < size; i++ {
+		moodChoice := rand.Int() % moodTypeCount
+		dt := ago.AddDate(0, 0, i)
+		m := mood.New(moodTypes[moodChoice], titles[moodChoice], descs[moodChoice], "")
+		m.CreateTime = dt
+		m.UpdateTime = dt
+		m.SetUpdateTimeStr()
+		if err := mood.Insert(m); err != nil {
 			fmt.Println(err.Error())
 		}
 	}

@@ -23,13 +23,13 @@ func CreateMood(m mood.Mood) (mood.Mood, error) {
 }
 
 func GetMoods() ([]mood.Mood, error) {
-	now := time.Now()
-	ago := now.AddDate(0, -3, 0)
-	filter := bson.D{
-		{"create_time", []interface{}{
-			bson.D{{"$gt", ago}},
-			bson.D{{"$lt", now}},
-		}},
-	}
-	return mood.Find(filter)
+	//now := time.Now()
+	//ago := now.AddDate(0, -3, 0)
+	//filter := bson.D{
+	//	{"create_time", []interface{}{
+	//		bson.D{{"$gt", ago}},
+	//		bson.D{{"$lt", now}},
+	//	}},
+	//}
+	return mood.Find(bson.D{})
 }

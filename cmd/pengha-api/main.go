@@ -15,7 +15,9 @@ func main() {
 	flag.Parse()
 	conf.SetConfigFilePath(*configPath)
 
-	InitSample() // test data
+	InitEmoticons() // test data
+	InitMoods()
+
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		Skipper:      middleware.DefaultSkipper,
