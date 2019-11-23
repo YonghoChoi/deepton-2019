@@ -20,6 +20,7 @@ func main() {
 	})
 
 	e.POST("/join", Join)
+	e.GET("/users", GetUsers)
 	e.GET("/moods", GetMoods)
 	e.GET("/data/emoticons", GetEmoticonDatas)
 

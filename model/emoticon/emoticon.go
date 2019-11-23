@@ -14,13 +14,13 @@ type Emoticon struct {
 	UpdateTime string `json:"update_time"`
 }
 
-func New(name, title, url string) *Emoticon {
-	m := new(Emoticon)
-	m.Id = uuid.New().String()
-	m.Name = name
-	m.Title = title
-	m.Url = url
-	m.CreateTime = time.Now().String()
-	m.UpdateTime = time.Now().String()
-	return m
+func New(name, title, url string) Emoticon {
+	e := Emoticon{}
+	e.Id = uuid.New().String()
+	e.Name = name
+	e.Title = title
+	e.Url = url
+	e.CreateTime = time.Now().String()
+	e.UpdateTime = time.Now().String()
+	return e
 }
