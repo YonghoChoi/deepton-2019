@@ -6,17 +6,17 @@ import (
 )
 
 type User struct {
-	Id         string `json:"id" bson:"_id"`
-	Name       string `json:"name"  bson:"name"`
-	Token      string `json:"token"  bson:"token"`
-	CreateTime string `json:"create_time"  bson:"create_time"`
-	UpdateTime string `json:"update_time"  bson:"update_time"`
+	Id         string    `json:"id" bson:"_id"`
+	Name       string    `json:"name"  bson:"name"`
+	Token      string    `json:"token"  bson:"token"`
+	CreateTime time.Time `json:"create_time"  bson:"create_time"`
+	UpdateTime time.Time `json:"update_time"  bson:"update_time"`
 }
 
 func (o *User) Join() {
 	o.Id = uuid.New().String()
-	o.CreateTime = time.Now().String()
-	o.UpdateTime = time.Now().String()
+	o.CreateTime = time.Now()
+	o.UpdateTime = time.Now()
 }
 
 func New(name, token string) User {
@@ -24,7 +24,7 @@ func New(name, token string) User {
 	u.Id = uuid.New().String()
 	u.Name = name
 	u.Token = token
-	u.CreateTime = time.Now().String()
-	u.UpdateTime = time.Now().String()
+	u.CreateTime = time.Now()
+	u.UpdateTime = time.Now()
 	return u
 }

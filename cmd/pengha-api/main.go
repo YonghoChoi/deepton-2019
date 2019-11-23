@@ -27,8 +27,9 @@ func main() {
 	e.POST("/join", Join)
 	e.POST("/login", Login)
 	e.GET("/api/users", GetUsers)
-	e.GET("/api/moods", GetMoods)
 	e.GET("/api/emoticons", GetEmoticonDatas)
+	e.GET("/api/moods", GetMoods)
+	e.POST("/api/moods", CreateMood)
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
