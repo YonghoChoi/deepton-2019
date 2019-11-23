@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"net/http"
 	"yonghochoi.com/depthon-2019/cmd/pengha-api/conf"
 )
@@ -16,6 +17,12 @@ func main() {
 
 	InitSample() // test data
 	e := echo.New()
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		Skipper:      middleware.DefaultSkipper,
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete},
+	}))
+
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "success")
 	})
